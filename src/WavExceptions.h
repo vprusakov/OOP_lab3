@@ -29,3 +29,17 @@ class FileIncorrectFormat : public WavException {
 public:
 	FileIncorrectFormat(const std::string& msg) : WavException(msg) {};
 };
+
+
+
+class FileException : public WavException {
+public:
+	FileException(const string &filename) : WavException("File " + filename + " can't be read.\n") {};
+	static FILE* OpenFile(const string &filename, const string &mode) {
+		FILE *f;
+		if ((f = fopen( filename.c_str(), mode.c_str() )) == 0) {
+			throw FileException(filename);
+		}
+		return f;
+	}
+};

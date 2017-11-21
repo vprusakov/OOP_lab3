@@ -6,10 +6,8 @@ void Wav::ReadHeader(const string& filename)
 	printf(">>>> read_header( %s )\n", filename);
 	//null_header(header_ptr); // Fill header with zeroes.
 
-	FILE* f = fopen(filename.c_str(), "rb");
-	if (!f) {
-		throw ExcIO(filename);
-	}
+	//FILE* f = fopen(filename.c_str(), "rb");
+	FILE *f = FileException::OpenFile(filename, "rb");
 
 	size_t blocks_read = fread(&head, sizeof(head), 1, f);
 	if (blocks_read != 1) {
@@ -117,7 +115,7 @@ void Wav::ExtracrDataInt16(string& filename)
 	all_channels.resize(chan_count * samples_per_chan);
 	size_t read_bytes = fread(all_channels.data(), 1, head.subchunk2Size, f);
 	if (read_bytes != head.subchunk2Size) {
-		printf("extract_data_int16() read only %zu of %u\n", read_bytes, head.subchunk2Size);
+		printf	("extract_data_int16() read only %zu of %u\n", read_bytes, head.subchunk2Size);
 		return IO_ERROR;
 	}
 	fclose(f);
