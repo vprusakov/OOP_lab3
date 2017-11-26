@@ -13,33 +13,19 @@ private:
 	std::string message;
 };
 
-class ExcIO : public WavException {
+class IO_Exception : public WavException {
 public:
-	ExcIO(const std::string& filename) : WavException("File " + filename + " can't be read.\n") {};
+	IO_Exception(const std::string& filename) : WavException("File " + filename + " can't be read.\n") {};
 };
-class ExcBadFormat : public WavException {
+class Format_Exception : public WavException {
 public:
-	ExcBadFormat(const std::string& filename) : WavException("Incorrect format of " + filename + ".\n") {};
+	Format_Exception(const std::string& msg) : WavException(msg) {};
 };
-class ExcHeader : public WavException {
+class Header_Exception : public WavException {
 public:
-	ExcHeader(const std::string& msg) : WavException(msg) {};
+	Header_Exception(const std::string& msg) : WavException(msg) {};
 };
-class FileIncorrectFormat : public WavException {
+class Parameters_Exception : public WavException {
 public:
-	FileIncorrectFormat(const std::string& msg) : WavException(msg) {};
-};
-
-
-
-class FileException : public WavException {
-public:
-	FileException(const string &filename) : WavException("File " + filename + " can't be read.\n") {};
-	static FILE* OpenFile(const string &filename, const string &mode) {
-		FILE *f;
-		if ((f = fopen( filename.c_str(), mode.c_str() )) == 0) {
-			throw FileException(filename);
-		}
-		return f;
-	}
+	Parameters_Exception(const std::string& msg) : WavException(msg) {};
 };

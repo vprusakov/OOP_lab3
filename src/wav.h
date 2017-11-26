@@ -1,21 +1,28 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <iostream>
+#include "WavExceptions.h"
 #include "wav_header.h"
 
 using namespace std;
 class Wav {
 public:
-	void ReadHeader(const string& filename);
+	Wav(const std::string &filename);
+	void ReadHeader();
 	void PrintInfo();
-	void ExtracrDataInt16(string& filename);
-	void MakeWavFile(const char* filename, int sample_rate);
+	void ExtractDataInt16();
+	void MakeWavFile(const std::string filename);
 	void MakeMono();
+	void MakeReverb(double delay_seconds, float decay);
+	~Wav();
 private:
+	FILE *f;
 	wav_header_s head;
-	vector<vector<short>> channels;
+	size_t data_size;
+	vector<vector<short>> channels_data;
 
-	void HeadRefactor(int chan_count, int bits_per_sample, int sample_rate, int samples_count_per_chan);
-	void null_header(wav_header_s* header_ptr);
+	void HeadRefactor(int chan_count, int sample_rate, int samples_count_per_chan);
+	//void null_header(wav_header_s* header_ptr);
 	void CheckHeader();
 };
