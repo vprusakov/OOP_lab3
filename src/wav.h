@@ -23,6 +23,5 @@ private:
 	vector<vector<short>> channels_data;
 
 	void HeadRefactor(int chan_count, int sample_rate, int samples_count_per_chan);
-	//void null_header(wav_header_s* header_ptr);
 	void CheckHeader();
 };
